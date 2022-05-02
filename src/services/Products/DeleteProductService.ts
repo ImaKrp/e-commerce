@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 class DeleteProductService {
-  async execute(id: string) {
+  async execute(id: number) {
     try {
       await prismaClient.quantity.deleteMany({
         where: {

@@ -22,7 +22,7 @@ class CouponController {
       const service = new ApplyCouponToActiveOrder();
 
       try {
-        const result = await service.execute(userId, coupon);
+        const result = await service.execute(Number(userId), coupon);
         if (result) {
           try {
             const service = new GetActiveOrdersService();

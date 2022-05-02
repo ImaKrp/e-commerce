@@ -14,7 +14,7 @@ interface IQuantities {
 
 class UpdateProductService {
   async execute(
-    product_id: string,
+    product_id: number,
     name?: string,
     value?: number,
     image?: string,

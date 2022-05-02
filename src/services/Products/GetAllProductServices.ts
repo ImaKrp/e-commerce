@@ -21,7 +21,7 @@ interface IQuantity {
   id: number;
   size_id: number;
   quantity: number;
-  product_id: string;
+  product_id: number;
   size: ISize;
 }
 
@@ -32,21 +32,21 @@ interface IFilteredQuantities {
 }
 
 interface IProduct {
-  id: string;
+  id: number;
   name: string;
   image: string;
   value: number;
-  promotionId: number;
+  promotion_id: number;
   quantity?: IQuantity[];
   categories?: ICategories[];
 }
 
 interface IFilteredProduct {
-  id: string;
+  id: number;
   name: string;
   image: string;
   value: number;
-  promotionId: number;
+  promotion_id: number;
   quantities?: IFilteredQuantities[];
   categories?: ICategory[];
 }
@@ -65,7 +65,7 @@ const getProductsWithSizes = (products: IProduct[]) => {
 
     delete product.quantity;
     delete product.categories;
-    delete product.promotionId;
+    delete product.promotion_id;
     return { ...product, quantities: sizes, categories };
   });
 

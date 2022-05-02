@@ -1,13 +1,13 @@
 import prismaClient from "../../prisma";
 
 interface IProducts {
-  product_id: string;
+  product_id: number;
   size_id: number;
   quantity: number;
 }
 
 class CreateOrderService {
-  async execute(user_id: string, products: IProducts[]) {
+  async execute(user_id: number, products: IProducts[]) {
     const activeOrder = await prismaClient.orders.findFirst({
       where: {
         user_id,

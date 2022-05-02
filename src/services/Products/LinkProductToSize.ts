@@ -6,7 +6,7 @@ interface IQuantities {
 }
 
 class LinkProductToSize {
-  async execute(product_id: string, quantities: IQuantities[]) {
+  async execute(product_id: number, quantities: IQuantities[]) {
     const product = await prismaClient.product.findFirst({
       where: { id: product_id },
     });

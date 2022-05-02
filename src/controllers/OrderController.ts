@@ -12,7 +12,7 @@ class OrderController {
     const service = new GetAllOrdersService();
 
     try {
-      const result = await service.execute(userId, isAdmin);
+      const result = await service.execute(Number(userId), isAdmin);
       return res.json(result);
     } catch (err) {
       return res
@@ -26,7 +26,7 @@ class OrderController {
     const service = new GetActiveOrdersService();
 
     try {
-      const result = await service.execute(userId);
+      const result = await service.execute(Number(userId));
       return res.json(result);
     } catch (err) {
       return res
@@ -42,7 +42,7 @@ class OrderController {
 
     if (!isAdmin) {
       try {
-        const result = await service.execute(userId, products);
+        const result = await service.execute(Number(userId), products);
         return res.json(result);
       } catch (err) {
         return res
@@ -60,11 +60,11 @@ class OrderController {
 
     if (!isAdmin) {
       try {
-        const result = await service.execute(userId, products);
+        const result = await service.execute(Number(userId), products);
         if (result) {
           const service = new GetActiveOrdersService();
           try {
-            const result = await service.execute(userId);
+            const result = await service.execute(Number(userId));
             return res.json(result);
           } catch (e) {
             return res.json(result);
@@ -86,11 +86,11 @@ class OrderController {
 
     if (!isAdmin) {
       try {
-        const result = await service.execute(userId, products);
+        const result = await service.execute(Number(userId), products);
         if (result) {
           const service = new GetActiveOrdersService();
           try {
-            const result = await service.execute(userId);
+            const result = await service.execute(Number(userId));
             return res.json(result);
           } catch (e) {
             return res.json(result);
@@ -110,7 +110,7 @@ class OrderController {
     const service = new ConcludeOrderService();
 
     try {
-      const result = await service.execute(userId);
+      const result = await service.execute(Number(userId));
       return res.json(result);
     } catch (err) {
       return res

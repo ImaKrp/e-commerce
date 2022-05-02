@@ -8,7 +8,7 @@ interface ICategory {
 interface ICategories {
   id: number;
   category_id: number;
-  product_id: string;
+  product_id: number;
   category: ICategory;
 }
 
@@ -21,16 +21,16 @@ interface IQuantity {
   id: number;
   size_id: number;
   quantity: number;
-  product_id: string;
+  product_id: number;
   size: ISize;
 }
 
 interface IProduct {
-  id: string;
+  id: number;
   name: string;
   image: string;
   value: number;
-  promotionId: number;
+  promotion_id: number;
   quantity?: IQuantity[];
   categories?: ICategories[];
 }
@@ -48,12 +48,12 @@ const getProductWithSizes = (product: IProduct) => {
 
   delete product.quantity;
   delete product.categories;
-  delete product.promotionId;
+  delete product.promotion_id;
   return { ...product, quantities: sizes, categories };
 };
 
 class GetProductFromIdServices {
-  async execute(product_id?: string) {
+  async execute(product_id: number) {
     const product = await prismaClient.product.findFirst({
       where: {
         id: product_id,

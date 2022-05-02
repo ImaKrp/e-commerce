@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 class LinkProductToPromotion {
-  async execute(product_id: string, promotion_id: number) {
+  async execute(product_id: number, promotion_id: number) {
     const product = await prismaClient.product.findFirst({
       where: { id: product_id },
       include: { promotion: true },
@@ -31,7 +31,7 @@ class LinkProductToPromotion {
       await prismaClient.product.update({
         where: { id: product.id },
         data: {
-          promotionId: null,
+          promotion_id: null,
         },
       });
     } else {
@@ -44,7 +44,7 @@ class LinkProductToPromotion {
         where: { id: product.id },
         data: {
           value,
-          promotionId: promotion.id,
+          promotion_id: promotion.id,
         },
       });
     }

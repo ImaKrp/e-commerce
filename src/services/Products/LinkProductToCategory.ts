@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 class LinkProductToCategory {
-  async execute(product_id: string, categories: number[]) {
+  async execute(product_id: number, categories: number[]) {
     const product = await prismaClient.product.findFirst({
       where: { id: product_id },
     });

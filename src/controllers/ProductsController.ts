@@ -78,7 +78,7 @@ class ProductsController {
 
       try {
         const result = await service.execute(
-          id,
+          Number(id),
           name,
           value,
           image,
@@ -105,7 +105,7 @@ class ProductsController {
     if (isAdmin) {
       const service = new DeleteProductService();
       try {
-        const result = await service.execute(String(id));
+        const result = await service.execute(Number(id));
         return res.json(result);
       } catch (err) {
         return res
@@ -126,7 +126,7 @@ class ProductsController {
     if (isAdmin) {
       const service = new LinkProductToCategory();
       try {
-        const result = await service.execute(id, categories);
+        const result = await service.execute(Number(id), categories);
         return res.json(result);
       } catch (err) {
         return res
@@ -147,7 +147,7 @@ class ProductsController {
     if (isAdmin) {
       const service = new LinkProductToPromotion();
       try {
-        const result = await service.execute(id, promotion);
+        const result = await service.execute(Number(id), promotion);
         return res.json(result);
       } catch (err) {
         return res
@@ -168,7 +168,7 @@ class ProductsController {
     if (isAdmin) {
       const service = new LinkProductToSize();
       try {
-        const result = await service.execute(id, quantities);
+        const result = await service.execute(Number(id), quantities);
         return res.json(result);
       } catch (err) {
         return res
@@ -210,7 +210,7 @@ class ProductsController {
     const service = new GetProductFromIdServices();
 
     try {
-      const result = await service.execute(productId);
+      const result = await service.execute(Number(productId));
       return res.json(result);
     } catch (err) {
       return res

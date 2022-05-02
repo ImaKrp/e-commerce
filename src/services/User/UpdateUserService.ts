@@ -12,7 +12,7 @@ interface IData {
 
 class UpdateUserService {
   async execute(
-    user_id: string,
+    user_id: number,
     email?: string,
     password?: string,
     name?: string,

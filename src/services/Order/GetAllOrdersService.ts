@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 interface IProduct {
-  id: string;
+  id: number;
   name: string;
   image: string;
   value: number;
@@ -13,9 +13,9 @@ interface ISize {
 }
 
 interface IOrderedProduct {
-  id: string;
-  product_id: string;
-  order_id: string;
+  id: number;
+  product_id: number;
+  order_id: number;
   quantity: number;
   size_id: number;
   product?: IProduct;
@@ -23,7 +23,7 @@ interface IOrderedProduct {
 }
 
 interface IUser {
-  id: string;
+  id: number;
   email: string;
   password: string;
   name: string;
@@ -32,12 +32,12 @@ interface IUser {
 }
 
 interface IOrder {
-  id: string;
+  id: number;
   value: number;
-  user_id: string;
+  user_id: number;
   done: boolean;
   created_at: Date;
-  OrderedProducts: IOrderedProduct[];
+  ordered_products: IOrderedProduct[];
   user?: IUser;
 }
 
@@ -51,11 +51,11 @@ const getProductsWithSizes = (products: IOrderedProduct[]) => {
 };
 
 class GetAllOrdersService {
-  async execute(user_id: string, isAdmin?: boolean) {
+  async execute(user_id: number, isAdmin?: boolean) {
     if (isAdmin) {
       const allOrders = await prismaClient.orders.findMany({
         include: {
-          OrderedProducts: {
+          ordered_products: {
             include: {
               product: true,
               size: true,
@@ -72,9 +72,9 @@ class GetAllOrdersService {
       });
 
       const filteredOrder = allOrders.map((userOrder: IOrder) => {
-        const orders = getProductsWithSizes(userOrder.OrderedProducts);
+        const orders = getProductsWithSizes(userOrder.ordered_products);
 
-        delete userOrder.OrderedProducts;
+        delete userOrder.ordered_products;
 
         return { ...userOrder, products: orders };
       });
@@ -87,7 +87,7 @@ class GetAllOrdersService {
         user_id: user_id,
       },
       include: {
-        OrderedProducts: {
+        ordered_products: {
           include: {
             product: true,
             size: true,
@@ -99,9 +99,9 @@ class GetAllOrdersService {
     const filteredOrder = userOrders.map((userOrder: IOrder) => {
       delete userOrder.user_id;
 
-      const orders = getProductsWithSizes(userOrder.OrderedProducts);
+      const orders = getProductsWithSizes(userOrder.ordered_products);
 
-      delete userOrder.OrderedProducts;
+      delete userOrder.ordered_products;
 
       return { ...userOrder, products: orders };
     });

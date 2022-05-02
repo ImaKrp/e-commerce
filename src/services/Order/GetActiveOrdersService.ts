@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 interface IProduct {
-  id: string;
+  id: number;
   name: string;
   image: string;
   value: number;
@@ -13,9 +13,9 @@ interface ISize {
 }
 
 interface IOrderedProduct {
-  id: string;
-  product_id: string;
-  order_id: string;
+  id: number;
+  product_id: number;
+  order_id: number;
   quantity: number;
   size_id: number;
   product: IProduct;
@@ -32,7 +32,7 @@ const getProductsWithSizes = (products: IOrderedProduct[]) => {
 };
 
 class GetActiveOrdersService {
-  async execute(user_id: string) {
+  async execute(user_id: number) {
     try {
       const userOrder = await prismaClient.orders.findFirst({
         where: {
@@ -40,7 +40,7 @@ class GetActiveOrdersService {
           done: false,
         },
         include: {
-          OrderedProducts: {
+          ordered_products: {
             include: {
               product: true,
               size: true,
@@ -52,9 +52,9 @@ class GetActiveOrdersService {
 
       delete userOrder.user_id;
 
-      const orders = getProductsWithSizes(userOrder.OrderedProducts);
+      const orders = getProductsWithSizes(userOrder.ordered_products);
 
-      delete userOrder.OrderedProducts;
+      delete userOrder.ordered_products;
 
       return { ...userOrder, products: orders };
     } catch (error) {

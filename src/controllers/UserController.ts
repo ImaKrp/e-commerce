@@ -87,7 +87,7 @@ class UserController {
     const service = new UpdateUserService();
     try {
       const result = await service.execute(
-        user_id,
+        Number(user_id),
         email,
         password,
         name,

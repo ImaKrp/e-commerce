@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 class ConcludeOrderService {
-  async execute(user_id: string) {
+  async execute(user_id: number) {
     const activeOrder = await prismaClient.orders.findFirst({
       where: {
         user_id,

@@ -1,7 +1,7 @@
 import prismaClient from "../../prisma";
 
 class ApplyCouponToActiveOrder {
-  async execute(user_id: string, coupon: string) {
+  async execute(user_id: number, coupon: string) {
     const order = await prismaClient.orders.findFirst({
       where: {
         user_id,
@@ -34,7 +34,7 @@ class ApplyCouponToActiveOrder {
           },
           data: {
             value: orderValue,
-            appliedCoupon: null,
+            applied_coupon: null,
           },
         });
         return updatedOrder;
@@ -56,7 +56,7 @@ class ApplyCouponToActiveOrder {
       },
       data: {
         value: orderValue,
-        appliedCoupon: discountCoupon.id,
+        applied_coupon: discountCoupon.id,
       },
     });
 

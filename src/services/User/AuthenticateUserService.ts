@@ -26,17 +26,19 @@ class AuthenticateUserService {
       };
     }
 
+    const id = String(user.id);
+
     const token = sign(
       {
         user: {
           email: user.email,
-          id: user.id,
+          id,
           permission: user.permission,
         },
       },
       process.env.JWT_SECRET,
       {
-        subject: user.id,
+        subject: id,
       }
     );
 
