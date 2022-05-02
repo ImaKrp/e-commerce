@@ -26,7 +26,7 @@ class CouponController {
         if (result) {
           try {
             const service = new GetActiveOrdersService();
-            const result = await service.execute(userId);
+            const result = await service.execute(Number(userId));
             return res.json(result);
           } catch (e) {
             return res.json(result);

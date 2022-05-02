@@ -31,12 +31,30 @@ interface IFilteredQuantities {
   quantity: number;
 }
 
+interface IProductFromLink {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  variation: string;
+  value: number;
+  promotion_id: number | null;
+  products_link_id: number;
+}
+
+interface IProductLink {
+  id: number;
+  product: IProductFromLink[];
+}
+
 interface IProduct {
   id: number;
   name: string;
   image: string;
   value: number;
-  promotion_id: number;
+  promotion_id: number | null;
+  products_link_id: number | null;
+  products_link?: IProductLink;
   quantity?: IQuantity[];
   categories?: ICategories[];
 }
@@ -66,7 +84,13 @@ const getProductsWithSizes = (products: IProduct[]) => {
     delete product.quantity;
     delete product.categories;
     delete product.promotion_id;
-    return { ...product, quantities: sizes, categories };
+    delete product.products_link_id;
+
+    return {
+      ...product,
+      quantities: sizes,
+      categories,
+    };
   });
 
   return result;
@@ -175,8 +199,7 @@ class GetAllTransactionsServices {
     }
 
     return productsWithSizes.filter(
-      (product: IFilteredProduct) =>
-        product?.quantities?.length > 0 && product?.categories?.length > 0
+      (product: IFilteredProduct) => product?.quantities?.length > 0
     );
   }
 }

@@ -4,6 +4,7 @@ import { GetAllTransactionsServices } from "../services/Products/GetAllProductSe
 import { DeleteProductService } from "../services/Products/DeleteProductService";
 import { LinkProductToCategory } from "../services/Products/LinkProductToCategory";
 import { LinkProductToSize } from "../services/Products/LinkProductToSize";
+import { LinkProductToProduct } from "../services/Products/LinkProductToProduct";
 import { LinkProductToPromotion } from "../services/Products/LinkProductToPromotion";
 import { UpdateProductService } from "../services/Products/UpdateProductService";
 import { GetProductFromIdServices } from "../services/Products/GetProductFromIdServices";
@@ -116,6 +117,26 @@ class ProductsController {
       return res
         .status(401)
         .json({ error: "Only admins can delete products." });
+  }
+
+  async vinculateProducts(req: Request, res: Response) {
+    const { products, id } = req.body;
+    const { is_admin: isAdmin } = req;
+
+    if (isAdmin) {
+      const service = new LinkProductToProduct();
+      try {
+        const result = await service.execute(products, id);
+        return res.json(result);
+      } catch (err) {
+        return res
+          .status(err.code ?? 400)
+          .json({ error: err.error ?? err.message });
+      }
+    } else
+      return res
+        .status(401)
+        .json({ error: "Only admins can vinculate products." });
   }
 
   async vinculateCategory(req: Request, res: Response) {

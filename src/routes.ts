@@ -121,6 +121,13 @@ router.post(
 );
 
 router.post(
+  "/products/link",
+  ensureAuthenticated,
+  getUserPermission,
+  new ProductsController().vinculateProducts
+);
+
+router.post(
   "/products/:id/sizes",
   ensureAuthenticated,
   getUserPermission,
