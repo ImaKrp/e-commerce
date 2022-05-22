@@ -105,3 +105,8 @@ model ProductsLink {
   id      Int       @id @default(autoincrement())
   product Product[]
 }
+
+model PasswordRecovery {
+  id    String @id @default(uuid())
+  email String
+}

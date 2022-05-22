@@ -3,6 +3,8 @@ import { AuthenticateUserService } from "../services/User/AuthenticateUserServic
 import { CreateUserService } from "../services/User/CreateUserService";
 import { UpdateUserService } from "../services/User/UpdateUserService";
 import { GetAllUsersService } from "../services/User/GetAllUsersService";
+import { RequestPasswordRecovery } from "../services/User/PasswordRecovery/RequestPasswordRecovery";
+import { PasswordRecovery } from "../services/User/PasswordRecovery/PasswordRecovery";
 
 class UserController {
   async authenticate(req: Request, res: Response) {
@@ -117,6 +119,51 @@ class UserController {
       }
     } else
       return res.status(401).json({ error: "Only admins can create sizes." });
+  }
+
+  async reqPasswordRecovery(req: Request, res: Response) {
+    const { email } = req.body;
+    const service = new RequestPasswordRecovery();
+
+    if (!email) {
+      return res.status(400).json({
+        error: {
+          message: `Field is required: email`,
+        },
+      });
+    }
+
+    try {
+      const result = await service.execute(email);
+      return res.json(result);
+    } catch (err) {
+      return res
+        .status(err.code ?? 400)
+        .json({ error: err.error ?? err.message });
+    }
+  }
+
+  async passwordRecovery(req: Request, res: Response) {
+    const { id } = req.params;
+    const { password } = req.body;
+    const service = new PasswordRecovery();
+
+    if (!password) {
+      return res.status(400).json({
+        error: {
+          message: `Field is required: password`,
+        },
+      });
+    }
+
+    try {
+      const result = await service.execute(id, password);
+      return res.json(result);
+    } catch (err) {
+      return res
+        .status(err.code ?? 400)
+        .json({ error: err.error ?? err.message });
+    }
   }
 }
 

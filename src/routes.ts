@@ -21,6 +21,10 @@ const router = Router();
 
 router.post("/register", new UserController().create);
 
+router.post("/recover", new UserController().reqPasswordRecovery);
+
+router.patch("/recover/:id", new UserController().passwordRecovery);
+
 router.post("/authenticate", new UserController().authenticate);
 
 router.put(
